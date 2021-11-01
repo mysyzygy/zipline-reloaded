@@ -27,7 +27,7 @@ requirements:
     - python-dateutil
     - pytz
     - toolz
-    - korean_lunar_calenda
+    - korean_lunar_calendar
 
 test:
   imports:
