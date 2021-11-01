@@ -1,4 +1,4 @@
-name: Exchange calendar conda distribution
+name: Exchange calendars conda distribution
 
 on:
   workflow_dispatch
