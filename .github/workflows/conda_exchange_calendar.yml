@@ -36,7 +36,7 @@ jobs:
         run: |
           conda activate recipe
           conda install -n recipe conda-build conda-verify anaconda-client
-          conda-build --output-folder . --python ${{ matrix.python }} conda/echange-calendars/
+          conda-build --output-folder . --python ${{ matrix.python }} conda/exchange-calendars/
 
       - name: store macos result
         uses: actions/upload-artifact@v2
