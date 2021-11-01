@@ -6,7 +6,6 @@ package:
   version: {{ version }}
 
 source:
-  fn: exchange_calendars-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/exchange_calendars-{{ version }}.tar.gz
   md5: cde61c2c11e5167d2faa48defdb364f4
 
