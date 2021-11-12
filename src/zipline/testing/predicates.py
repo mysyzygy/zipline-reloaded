@@ -98,11 +98,7 @@ class instance_of(object):
         typenames = tuple(t.__name__ for t in self.types)
         return "%s(%s%s)" % (
             type(self).__name__,
-            (
-                typenames[0]
-                if len(typenames) == 1
-                else "(%s)" % ", ".join(typenames)
-            ),
+            (typenames[0] if len(typenames) == 1 else "(%s)" % ", ".join(typenames)),
             ", exact=True" if self.exact else "",
         )
 
@@ -379,9 +375,7 @@ def assert_ordereddict_equal(result, expected, path=(), **kwargs):
 def assert_sequence_equal(result, expected, path=(), msg="", **kwargs):
     result_len = len(result)
     expected_len = len(expected)
-    assert (
-        result_len == expected_len
-    ), "%s%s lengths do not match: %d != %d\n%s" % (
+    assert result_len == expected_len, "%s%s lengths do not match: %d != %d\n%s" % (
         _fmt_msg(msg),
         type(result).__name__,
         result_len,
@@ -389,9 +383,7 @@ def assert_sequence_equal(result, expected, path=(), msg="", **kwargs):
         _fmt_path(path),
     )
     for n, (resultv, expectedv) in enumerate(zip(result, expected)):
-        assert_equal(
-            resultv, expectedv, path=path + ("[%d]" % n,), msg=msg, **kwargs
-        )
+        assert_equal(resultv, expectedv, path=path + ("[%d]" % n,), msg=msg, **kwargs)
 
 
 @assert_equal.register(set, set)
@@ -422,8 +414,7 @@ def assert_array_equal(
         assert result_dtype == expected_dtype, (
             "\nType mismatch:\n\n"
             "result dtype: %s\n"
-            "expected dtype: %s\n%s"
-            % (result_dtype, expected_dtype, _fmt_path(path))
+            "expected dtype: %s\n%s" % (result_dtype, expected_dtype, _fmt_path(path))
         )
 
         f = partial(
@@ -562,9 +553,7 @@ def assert_timestamp_and_datetime_equal(
     )
 
     if isinstance(result, pd.Timestamp) and isinstance(expected, pd.Timestamp):
-        assert_equal(
-            result.tz, expected.tz, path=path + (".tz",), msg=msg, **kwargs
-        )
+        assert_equal(result.tz, expected.tz, path=path + (".tz",), msg=msg, **kwargs)
 
     result = pd.Timestamp(result)
     expected = pd.Timestamp(expected)
@@ -651,9 +640,7 @@ def assert_messages_equal(result, expected, msg=""):
 
 def index_of_first_difference(left, right):
     """Get the index of the first difference between two strings."""
-    difflocs = (
-        i for (i, (lc, rc)) in enumerate(zip_longest(left, right)) if lc != rc
-    )
+    difflocs = (i for (i, (lc, rc)) in enumerate(zip_longest(left, right)) if lc != rc)
     try:
         return next(difflocs)
     except StopIteration:

@@ -93,9 +93,7 @@ class HistoryCompatibleUSEquityAdjustmentReader(object):
         end = normalize_date(dts[-1])
         adjs = {}
         if field != "volume":
-            mergers = self._adjustments_reader.get_adjustments_for_sid(
-                "mergers", sid
-            )
+            mergers = self._adjustments_reader.get_adjustments_for_sid("mergers", sid)
             for m in mergers:
                 dt = m[0]
                 if start < dt <= end:
@@ -106,9 +104,7 @@ class HistoryCompatibleUSEquityAdjustmentReader(object):
                         adjs[adj_loc].append(mult)
                     except KeyError:
                         adjs[adj_loc] = [mult]
-            divs = self._adjustments_reader.get_adjustments_for_sid(
-                "dividends", sid
-            )
+            divs = self._adjustments_reader.get_adjustments_for_sid("dividends", sid)
             for d in divs:
                 dt = d[0]
                 if start < dt <= end:
@@ -173,9 +169,7 @@ class ContinuousFutureAdjustmentReader(object):
             out[i] = adjs
         return out
 
-    def _make_adjustment(
-        self, adjustment_type, front_close, back_close, end_loc
-    ):
+    def _make_adjustment(self, adjustment_type, front_close, back_close, end_loc):
         adj_base = back_close - front_close
         if adjustment_type == "mul":
             adj_value = 1.0 + adj_base / front_close
@@ -217,17 +211,11 @@ class ContinuousFutureAdjustmentReader(object):
             )
             if isnull(last_front_dt) or isnull(last_back_dt):
                 continue
-            front_close = self._bar_reader.get_value(
-                front_sid, last_front_dt, "close"
-            )
-            back_close = self._bar_reader.get_value(
-                back_sid, last_back_dt, "close"
-            )
+            front_close = self._bar_reader.get_value(front_sid, last_front_dt, "close")
+            back_close = self._bar_reader.get_value(back_sid, last_back_dt, "close")
             adj_loc = dts.searchsorted(roll_dt)
             end_loc = adj_loc - 1
-            adj = self._make_adjustment(
-                cf.adjustment, front_close, back_close, end_loc
-            )
+            adj = self._make_adjustment(cf.adjustment, front_close, back_close, end_loc)
             try:
                 adjs[adj_loc].append(adj)
             except KeyError:
@@ -306,9 +294,7 @@ class HistoryLoader(metaclass=ABCMeta):
         if equity_adjustment_reader is not None:
             self._adjustment_readers[
                 Equity
-            ] = HistoryCompatibleUSEquityAdjustmentReader(
-                equity_adjustment_reader
-            )
+            ] = HistoryCompatibleUSEquityAdjustmentReader(equity_adjustment_reader)
         if roll_finders:
             self._adjustment_readers[
                 ContinuousFuture
@@ -535,9 +521,7 @@ class HistoryLoader(metaclass=ABCMeta):
         -------
         out : np.ndarray with shape(len(days between start, end), len(assets))
         """
-        block = self._ensure_sliding_windows(
-            assets, dts, field, is_perspective_after
-        )
+        block = self._ensure_sliding_windows(assets, dts, field, is_perspective_after)
         end_ix = self._calendar.searchsorted(dts[-1])
 
         return concatenate(

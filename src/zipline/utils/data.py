@@ -218,9 +218,7 @@ class RollingPanel(object):
             )
 
         elif values.ndim == 2:
-            return pd.DataFrame(
-                values, major_axis, self.minor_axis, dtype=self.dtype
-            )
+            return pd.DataFrame(values, major_axis, self.minor_axis, dtype=self.dtype)
 
     def set_current(self, panel):
         """
